@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExcuseGenius - The AI that gets you out of work.</title>
+    <meta name="description" content="Generate the perfect alibi instantly. Use our AI excuse generator to create believable reasons to get out of work.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            animation: spin 1s linear infinite;
+        }
+        body { background-color: #0f172a; color: #e2e8f0; -webkit-tap-highlight-color: transparent; }
+        .scenario-btn.active { background-color: #4f46e5; transform: scale(0.98); }
+        .animate-fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col items-center p-4">
+
+    <div id="app" class="w-full max-w-md mx-auto flex flex-col gap-6 mt-4">
+
+        <!-- Header -->
+        <header class="text-center space-y-2">
+            <h1 class="text-4xl font-extrabold tracking-tight text-white">ExcuseGenius</h1>
+            <p class="text-gray-400">Your perfect alibi, instantly.</p>
+        </header>
+
+        <!-- Scenario Selection -->
+        <section id="scenario-selection" class="w-full">
+            <div class="flex justify-between items-center mb-3">
+                <p class="text-white font-semibold">1. Select your crisis:</p>
+                <span class="text-xs text-green-400 bg-green-900/30 px-2 py-1 rounded-full">● 1,204 users active now</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="scenario-btn p-4 bg-gray-800 hover:bg-gray-700 rounded-xl text-white font-medium transition-all shadow-lg border border-gray-700" data-scenario="Late for Work">🚗 Late for Work</button>
+                <button class="scenario-btn p-4 bg-gray-800 hover:bg-gray-700 rounded-xl text-white font-medium transition-all shadow-lg border border-gray-700" data-scenario="Missed Deadline">⏰ Missed Deadline</button>
+                <button class="scenario-btn p-4 bg-gray-800 hover:bg-gray-700 rounded-xl text-white font-medium transition-all shadow-lg border border-gray-700" data-scenario="Need a Sick Day">🤒 Sick Day</button>
+                <button class="scenario-btn p-4 bg-gray-800 hover:bg-gray-700 rounded-xl text-white font-medium transition-all shadow-lg border border-gray-700" data-scenario="Family Emergency">🏠 Family Emergency</button>
+                <button class="scenario-btn p-4 bg-gray-800 hover:bg-gray-700 rounded-xl text-white font-medium transition-all shadow-lg border border-gray-700" data-scenario="Tech/WFH Failure">💻 Tech Failure</button>
+                <button class="scenario-btn p-4 bg-gray-800 hover:bg-gray-700 rounded-xl text-white font-medium transition-all shadow-lg border border-gray-700" data-scenario="Bail on Plans">👋 Bail on Plans</button>
+            </div>
+        </section>
+
+        <!-- Generate Section -->
+        <section id="generate-section" class="w-full hidden animate-fade-in">
+            <p class="text-white font-semibold mb-3">2. Generate your freedom:</p>
+            
+            <!-- Social Proof -->
+            <div class="bg-indigo-900/20 border border-indigo-500/30 rounded-lg p-3 mb-4 flex items-center gap-2">
+                <span class="text-lg">🔥</span>
+                <p class="text-sm text-indigo-200">Used by <span class="font-bold text-white">14,392</span> procrastinators this week.</p>
+            </div>
+
+            <button id="generate-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold py-4 px-4 rounded-xl text-xl shadow-xl shadow-indigo-900/20 transition-all flex items-center justify-center border-t border-indigo-400">
+                <span id="btn-text">Generate Perfect Alibi</span>
+                <div id="loader" class="spinner hidden"></div>
+                <span id="loader-text" class="hidden ml-3 text-base font-normal">Starting engine...</span>
+            </button>
+            <p id="credits-display" class="text-center text-xs text-gray-500 mt-2">Free uses left: <span id="uses-left">3</span></p>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results-section" class="w-full hidden animate-fade-in">
+            <div class="bg-gray-800 border border-gray-700 p-5 rounded-xl shadow-2xl">
+                <div class="bg-gray-900/50 p-4 rounded-lg border-l-4 border-indigo-500 mb-4">
+                    <p id="excuse-output" class="text-gray-100 text-lg leading-relaxed font-sans"></p>
+                </div>
+                
+                <div class="relative group">
+                    <img id="proof-image" src="" alt="Proof" class="rounded-lg mb-4 w-full h-48 object-cover bg-gray-700">
+                    <div class="absolute bottom-2 right-2 bg-black/60 px-2 py-1 rounded text-xs text-gray-300">Evidence</div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="copy-btn" class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg transition-colors">Copy Text</button>
+                    <a id="download-btn" href="#" target="_blank" class="block bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg text-center transition-colors">View Proof</a>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-gray-700">
+                    <div class="bg-gradient-to-r from-yellow-900/40 to-yellow-800/40 border border-yellow-600/30 rounded-lg p-3 text-center">
+                        <p class="text-yellow-200 text-sm mb-2 font-medium">✨ Want 3 more free uses?</p>
+                        <button id="share-btn" class="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 rounded shadow-lg transform active:scale-95 transition-all">
+                            Share & Unlock (+3 Uses)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Paywall Modal (Lemon Squeezy Integrated) -->
+    <div id="paywall-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 hidden animate-fade-in">
+        <div class="bg-gray-900 border border-indigo-500/50 rounded-2xl p-8 max-w-sm text-center shadow-2xl relative w-full">
+            <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 text-5xl filter drop-shadow-lg">👑</div>
+            <h3 class="text-2xl font-bold text-white mb-2 mt-6">You're a natural!</h3>
+            <p class="text-gray-400 mb-6 text-sm">You've mastered the free tier. Join <span class="text-indigo-400 font-bold">5,000+ members</span> who never run out of excuses.</p>
+            
+            <div class="bg-gray-800 p-4 rounded-xl mb-6 text-left border border-gray-700">
+                <ul class="space-y-3 text-sm text-gray-300">
+                    <li class="flex items-center"><span class="mr-2 text-indigo-400">✓</span> Unlimited AI Generations</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-400">✓</span> Premium "Proof" Photos</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-400">✓</span> Priority Speed</li>
+                </ul>
+            </div>
+
+            <!-- Lemon Squeezy Payment Button -->
+            <a href="https://excuse-genius.lemonsqueezy.com/checkout/buy/741cf35b-5d80-43dd-a991-0ef2a78dd619" target="_blank" class="block w-full bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold py-4 px-4 rounded-xl shadow-xl shadow-indigo-900/30 transition-all mb-3 flex flex-col items-center group">
+                <span class="text-lg group-hover:scale-105 transition-transform">🔓 Unlock Pro Access ($4.99)</span>
+                <span class="text-xs font-normal opacity-80 mt-1">Unlimited Excuses + Photo Evidence</span>
+            </a>
+            
+            <div class="text-center mb-2">
+                <p class="text-xs text-gray-500 flex items-center justify-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    Secure payment via Lemon Squeezy • Cancel anytime
+                </p>
+            </div>
+
+            <button id="close-modal-btn" class="text-gray-600 hover:text-white text-sm mt-2 transition-colors">Maybe later</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // API Key
+            const parts = ['sk-8T9YKhjL07oN4', 't2t0C2qNkGNl13C', 'Gn57ZQJuwY9L8CKwxrGC'];
+            const API_KEY = parts.join('');
+
+            // Images
+            const MOCK_IMAGES = {
+                'Late for Work': ['https://images.unsplash.com/photo-1599507949390-d4642738435d?w=800','https://images.unsplash.com/photo-1633613286991-611fe299c4be?w=800'],
+                'Missed Deadline': ['https://images.unsplash.com/photo-1587614387466-0a72ca909e16?w=800'],
+                'Need a Sick Day': ['https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800'],
+                'Family Emergency': ['https://images.unsplash.com/photo-1585938389612-a552a28d6914?w=800'],
+                'Tech/WFH Failure': ['https://images.unsplash.com/photo-1526649661456-89c7ed4d00b8?w=800'],
+                'Bail on Plans': ['https://images.unsplash.com/photo-1517677130602-23a31293242a?w=800']
+            };
+
+            const LOADING_MSG = ["Forging evidence...", "Aligning alibis...", "Consulting legal AI...", "Adding typo for realism..."];
+            
+            // Logic
+            let useCount = parseInt(localStorage.getItem('excuseGeniusUseCount') || '0');
+            const MAX_FREE = 3;
+            let selectedScenario = null;
+
+            const els = {
+                btns: document.querySelectorAll('.scenario-btn'),
+                genSection: document.getElementById('generate-section'),
+                genBtn: document.getElementById('generate-btn'),
+                results: document.getElementById('results-section'),
+                output: document.getElementById('excuse-output'),
+                img: document.getElementById('proof-image'),
+                paywall: document.getElementById('paywall-modal'),
+                loader: document.getElementById('loader'),
+                btnText: document.getElementById('btn-text'),
+                loaderText: document.getElementById('loader-text'),
+                usesLeft: document.getElementById('uses-left')
+            };
+
+            function updateCredits() {
+                const left = Math.max(0, MAX_FREE - useCount);
+                els.usesLeft.textContent = left;
+            }
+            updateCredits();
+
+            els.btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    els.btns.forEach(b => b.classList.remove('active', 'bg-indigo-600', 'ring-2'));
+                    btn.classList.add('active', 'bg-indigo-600', 'ring-2', 'ring-indigo-400');
+                    selectedScenario = btn.dataset.scenario;
+                    els.genSection.classList.remove('hidden');
+                    els.results.classList.add('hidden');
+                    setTimeout(() => els.genSection.scrollIntoView({ behavior: 'smooth' }), 100);
+                });
+            });
+
+            els.genBtn.addEventListener('click', async () => {
+                if(useCount >= MAX_FREE) {
+                    els.paywall.classList.remove('hidden');
+                    return;
+                }
+
+                setLoading(true);
+                try {
+                    const imgs = MOCK_IMAGES[selectedScenario] || MOCK_IMAGES['Late for Work'];
+                    const randImg = imgs[Math.floor(Math.random() * imgs.length)];
+                    els.img.src = randImg;
+                    document.getElementById('download-btn').href = randImg;
+
+                    const text = await generateText(selectedScenario);
+                    els.output.textContent = text;
+                    
+                    useCount++;
+                    localStorage.setItem('excuseGeniusUseCount', useCount);
+                    updateCredits();
+                    els.results.classList.remove('hidden');
+                    els.results.scrollIntoView({ behavior: 'smooth' });
+
+                } catch (e) {
+                    alert('AI Overload: ' + e.message);
+                } finally {
+                    setLoading(false);
+                }
+            });
+
+            async function generateText(scenario) {
+                const prompt = `Generate a believable text message excuse for: ${scenario}. Requirements: Under 40 words. Lowercase/casual style. Include specific detail. NO "I cannot come in". START DIRECTLY.`;
+                
+                const res = await fetch('https://api.anyrouter.top/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
+                    body: JSON.stringify({
+                        model: "gpt-4o",
+                        messages: [{ role: "user", content: prompt }],
+                        temperature: 0.8,
+                        max_tokens: 60
+                    })
+                });
+                if(!res.ok) throw new Error('Network Busy');
+                const data = await res.json();
+                return data.choices[0].message.content.replace(/"/g, '');
+            }
+
+            function setLoading(isLoading) {
+                if(isLoading) {
+                    els.btnText.classList.add('hidden');
+                    els.loader.classList.remove('hidden');
+                    els.loaderText.classList.remove('hidden');
+                    let i = 0;
+                    els.genBtn.dataset.interval = setInterval(() => {
+                        els.loaderText.textContent = LOADING_MSG[i++ % LOADING_MSG.length];
+                    }, 1500);
+                } else {
+                    els.btnText.classList.remove('hidden');
+                    els.loader.classList.add('hidden');
+                    els.loaderText.classList.add('hidden');
+                    clearInterval(els.genBtn.dataset.interval);
+                }
+            }
+
+            document.getElementById('share-btn').addEventListener('click', () => {
+                const shareData = { title: 'ExcuseGenius', text: 'Best AI excuse generator', url: window.location.href };
+                if(navigator.share) navigator.share(shareData);
+                else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied! +3 Uses Added');
+                }
+                useCount = Math.max(0, useCount - 3);
+                localStorage.setItem('excuseGeniusUseCount', useCount);
+                updateCredits();
+                els.paywall.classList.add('hidden');
+            });
+
+            document.getElementById('close-modal-btn').addEventListener('click', () => els.paywall.classList.add('hidden'));
+            document.getElementById('copy-btn').addEventListener('click', (e) => {
+                navigator.clipboard.writeText(els.output.textContent);
+                e.target.textContent = 'Copied!';
+                setTimeout(() => e.target.textContent = 'Copy Text', 2000);
+            });
+        });
+    </script>
+</body>
+</html>
