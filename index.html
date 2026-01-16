@@ -3,8 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ExcuseGenius - Your AI Alibi Co-pilot.</title>
-    <meta name="description" content="Generate the perfect alibi with photo evidence in 5 seconds. Don't get fired, get creative. The ultimate AI excuse generator for work, deadlines, and social plans.">
+
+    <!-- SEO Optimization -->
+    <title>ExcuseGenius - Free AI Excuse Generator | Get Out of Work Instantly</title>
+    <meta name="description" content="Generate believable excuses for work, school, or plans in seconds. Free AI-powered excuse generator with photo evidence. Used by 14,000+ people this week.">
+    <meta name="keywords" content="excuse generator, ai excuse, get out of work, sick day excuse, work excuse, free excuse generator, ai alibi">
+
+    <!-- Open Graph (for Facebook, LinkedIn, etc.) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://excuse-genius.vercel.app/">
+    <meta property="og:title" content="ExcuseGenius - Never Run Out of Excuses">
+    <meta property="og:description" content="AI-powered excuse generator with photo evidence. Free 3 uses. Join 14K+ users who got out of work this week 😅">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1599507949390-d4642738435d?auto=format&fit=crop&w=1200&h=630">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ExcuseGenius - AI Excuse Generator">
+    <meta name="twitter:description" content="Generate perfect excuses with photo evidence in 5 seconds. Free to use 🔥">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1599507949390-d4642738435d?auto=format&fit=crop&w=1200&h=630">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "ExcuseGenius",
+      "description": "AI-powered excuse generator with photo evidence",
+      "url": "https://excuse-genius.vercel.app/",
+      "applicationCategory": "Utility",
+      "offers": {
+        "@type": "Offer",
+        "price": "4.99",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
@@ -47,6 +84,15 @@
             <h1 class="text-5xl font-extrabold tracking-tighter text-white">ExcuseGenius 🤖</h1>
             <p class="text-gray-400 text-lg">Your perfect alibi, instantly.</p>
         </header>
+        
+        <div class="text-center -mt-4">
+            <p class="text-gray-500 text-xs mb-2 tracking-widest">AS FEATURED ON</p>
+            <div class="flex justify-center gap-6 opacity-60">
+                <span class="text-gray-400 font-bold text-sm">Product Hunt</span>
+                <span class="text-gray-400 font-bold text-sm">TikTok</span>
+                <span class="text-gray-400 font-bold text-sm">Reddit</span>
+            </div>
+        </div>
 
         <section id="scenario-selection" class="w-full">
             <div class="flex justify-between items-center mb-4">
@@ -90,7 +136,7 @@
                     <p id="excuse-output" class="text-gray-100 text-lg leading-relaxed"></p>
                 </div>
                 <div class="relative group mb-4">
-                    <img id="proof-image" src="" alt="Proof" class="rounded-lg w-full h-48 object-cover bg-slate-700">
+                    <img id="proof-image" src="" alt="AI-generated proof" class="rounded-lg w-full h-48 object-cover bg-slate-700">
                     <div class="absolute bottom-2 right-2 bg-black/60 px-2 py-1 rounded text-xs text-gray-300">AI-Generated Evidence</div>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
@@ -107,34 +153,83 @@
                 </div>
             </div>
         </section>
+
+        <section id="social-proof" class="w-full">
+            <h3 class="text-center text-gray-400 text-sm mb-4 tracking-wider">Trusted by professionals worldwide 🌎</h3>
+            <div class="space-y-4">
+                <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                    <div class="flex items-start gap-4">
+                        <img src="https://i.pravatar.cc/150?img=12" class="w-10 h-10 rounded-full" alt="">
+                        <div>
+                            <div class="flex gap-1 mb-1 text-yellow-400">⭐⭐⭐⭐⭐</div>
+                            <p class="text-gray-300 text-sm italic">"Saved my job twice this month. The photo evidence is chef's kiss 👌"</p>
+                            <p class="text-gray-500 text-xs mt-2 font-semibold">- Jake S., Software Engineer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                    <div class="flex items-start gap-4">
+                        <img src="https://i.pravatar.cc/150?img=5" class="w-10 h-10 rounded-full" alt="">
+                        <div>
+                            <div class="flex gap-1 mb-1 text-yellow-400">⭐⭐⭐⭐⭐</div>
+                            <p class="text-gray-300 text-sm italic">"My boss actually believed the 'pipe burst' excuse. This AI is scary good 😂"</p>
+                            <p class="text-gray-500 text-xs mt-2 font-semibold">- Sarah K., Marketing Manager</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <div id="paywall-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-800 border border-slate-700 rounded-2xl p-8 max-w-sm text-center shadow-2xl relative fade-in">
-            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 text-5xl">👑</div>
-            <h3 class="text-2xl font-bold text-white mb-2 mt-4">You're a natural!</h3>
-            <p class="text-gray-400 mb-6">You've mastered the free tier. Join <span class="text-indigo-400 font-bold">5,000+ members</span> who never run out of excuses.</p>
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl relative fade-in">
+            <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 text-5xl">👑</div>
+            
+            <div class="bg-red-500/20 border border-red-500/50 rounded-lg px-3 py-1 inline-block mb-4">
+                <p class="text-red-300 text-xs font-bold">⚡ LIMITED TIME: $4.99 (was $9.99)</p>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-white mb-2">You're a natural! 🔥</h3>
+            <p class="text-gray-400 mb-5">You've mastered the free tier. Join <span class="text-indigo-400 font-bold">5,247+ members</span> who never run out of excuses.</p>
+            
+            <div class="flex justify-center items-center gap-2 mb-5">
+                <div class="flex -space-x-3">
+                    <img class="w-8 h-8 rounded-full border-2 border-slate-800" src="https://i.pravatar.cc/150?img=1" alt="">
+                    <img class="w-8 h-8 rounded-full border-2 border-slate-800" src="https://i.pravatar.cc/150?img=2" alt="">
+                    <img class="w-8 h-8 rounded-full border-2 border-slate-800" src="https://i.pravatar.cc/150?img=3" alt="">
+                </div>
+                <p class="text-xs text-gray-400 self-center">+127 joined today</p>
+            </div>
+            
             <div class="bg-indigo-900/40 p-4 rounded-lg mb-6 text-left">
-                <ul class="space-y-2 text-gray-300">
-                    <li class="flex items-center gap-2">✅ Unlimited AI Generations</li>
-                    <li class="flex items-center gap-2">✅ Premium "Proof" Photos</li>
-                    <li class="flex items-center gap-2">✅ Priority Support</li>
+                <ul class="space-y-3 text-gray-300">
+                    <li class="flex items-center gap-3">✅ <span class="font-semibold">Unlimited</span> AI Generations</li>
+                    <li class="flex items-center gap-3">✅ <span class="font-semibold">Hyper-Local</span> Photo Evidence</li>
+                    <li class="flex items-center gap-3">✅ Priority 24/7 Support</li>
+                    <li class="flex items-center gap-3">✅ <span class="text-yellow-400 font-bold">100% Money-Back Guarantee</span></li>
                 </ul>
             </div>
-            <a href="https://excusegenius.lemonsqueezy.com/buy/YOUR_PRODUCT_ID" target="_blank" class="block w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 px-4 rounded-xl shadow-lg shadow-indigo-600/30 transition-all mb-2 text-lg">
-                🔓 Unlock Pro Access ($4.99)
+            
+            <a href="https://samzhu168.gumroad.com/l/pjdbk" target="_blank" 
+               class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-4 px-4 rounded-xl shadow-lg shadow-indigo-600/50 transition-all mb-2 text-lg transform hover:scale-105">
+                🔓 Unlock Pro Access - $4.99
             </a>
-            <p class="text-xs text-gray-500 mb-4">🔒 Secure payment via Lemon Squeezy • Cancel anytime</p>
+            
+            <p class="text-xs text-gray-500 mb-4">
+                🔒 Secure Checkout • 💳 Cancel Anytime • ⚡ Instant Access
+            </p>
+            
+            <p class="text-sm text-red-400 mb-4 font-semibold">
+                ⏰ Offer expires in <span id="countdown">14:59</span>
+            </p>
+            
             <button id="close-modal-btn" class="text-gray-500 hover:text-white text-sm">Maybe later</button>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // **安全:** API Key 已从前端完全移除
-
-            const MOCK_IMAGES = { 'Late for Work': ['https://images.unsplash.com/photo-1599507949390-d4642738435d?auto=format&fit=crop&w=800&q=80', 'https://images.unsplash.com/photo-1633613286991-611fe299c4be?auto=format&fit=crop&w=800&q=80'], 'Missed Deadline': ['https://images.unsplash.com/photo-1587614387466-0a72ca909e16?auto=format&fit=crop&w=800&q=80'], 'Need a Sick Day': ['https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80', 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80'], 'Family Emergency': ['https://images.unsplash.com/photo-1585938389612-a552a28d6914?auto=format&fit=crop&w=800&q=80'], 'Tech/WFH Failure': ['https://images.unsplash.com/photo-1526649661456-89c7ed4d00b8?auto=format&fit=crop&w=800&q=80'], 'Bail on Plans': ['https://images.unsplash.com/photo-1517677130602-23a31293242a?auto=format&fit=crop&w=800&q=80'] };
-            const LOADING_MSG = [ "Forging evidence...", "Aligning alibis...", "Consulting legal AI...", "Adding typo for realism...", "Hacking the mainframe...", "Reticulating splines..."];
+            const LOADING_MSG = ["Forging evidence...", "Aligning alibis...", "Consulting local transit AI...", "Adding typo for realism...", "Hacking the mainframe...", "Reticulating splines..."];
             
             let useCount = parseInt(localStorage.getItem('excuseGeniusUseCount') || '0');
             const MAX_FREE = 3;
@@ -165,11 +260,10 @@
                 els.usesLeftSpan.textContent = left;
             }
 
-            // 动态用户数，增加真实感
             setInterval(() => {
-                const current = parseInt(els.activeUsers.textContent);
+                const current = parseInt(els.activeUsers.textContent.replace(/,/g, ''));
                 const change = Math.floor(Math.random() * 5) - 2;
-                els.activeUsers.textContent = current + change;
+                els.activeUsers.textContent = (current + change).toLocaleString();
             }, 2500);
 
             els.btns.forEach(btn => {
@@ -193,13 +287,12 @@
                 setLoading(true);
                 
                 try {
-                    const { text, believability } = await generateText(selectedScenario);
+                    const { text, believability, imageSearchTerm } = await generateText(selectedScenario);
                     
-                    const imgs = MOCK_IMAGES[selectedScenario] || MOCK_IMAGES['Late for Work'];
-                    const randImg = imgs[Math.floor(Math.random() * imgs.length)];
+                    const imageUrl = `https://source.unsplash.com/800x600/?${encodeURIComponent(imageSearchTerm)}`;
                     
-                    els.img.src = randImg;
-                    els.downloadBtn.href = randImg;
+                    els.img.src = imageUrl;
+                    els.downloadBtn.href = imageUrl;
                     els.output.textContent = text;
                     els.scoreValue.textContent = `${believability}%`;
 
@@ -211,13 +304,13 @@
                     els.results.classList.add('fade-in');
                     els.results.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 } catch (e) {
-                    alert('AI Overload: ' + e.message);
+                    console.error(e);
+                    alert('AI Overload: ' + e.message + ' Please try again in a moment.');
                 } finally {
                     setLoading(false);
                 }
             });
 
-            // **核心函数变更**
             async function generateText(scenario) {
                 const res = await fetch('/api/generate', {
                     method: 'POST',
@@ -227,7 +320,7 @@
 
                 if (!res.ok) {
                     const error = await res.json();
-                    throw new Error(error.error || 'The server had an issue.');
+                    throw new Error(error.details?.error?.message || error.error || 'The server had an issue.');
                 }
                 return await res.json();
             }
@@ -239,8 +332,10 @@
                     els.loader.classList.remove('hidden');
                     els.loaderText.classList.remove('hidden');
                     let i = 0;
+                    els.loaderText.textContent = LOADING_MSG[0];
                     els.genBtn.dataset.interval = setInterval(() => {
-                        els.loaderText.textContent = LOADING_MSG[i++ % LOADING_MSG.length];
+                        i++;
+                        els.loaderText.textContent = LOADING_MSG[i % LOADING_MSG.length];
                     }, 1500);
                 } else {
                     els.btnText.classList.remove('hidden');
@@ -252,13 +347,18 @@
 
             els.shareBtn.addEventListener('click', () => {
                 const shareData = { title: 'ExcuseGenius', text: 'This AI just generated the perfect alibi for me! 🔥', url: window.location.href };
-                if (navigator.share) {
-                    navigator.share(shareData).then(() => {
-                        unlockUses();
-                    });
-                } else {
-                    navigator.clipboard.writeText(window.location.href);
-                    alert('Link copied! Share it to unlock more uses. +3 Uses Added!');
+                try {
+                     if (navigator.share) {
+                        navigator.share(shareData).then(() => {
+                            unlockUses();
+                            alert('Thanks for sharing! +3 uses added.');
+                        });
+                    } else {
+                        throw new Error('Web Share API not supported');
+                    }
+                } catch (err) {
+                    navigator.clipboard.writeText(shareData.text + ' ' + shareData.url);
+                    alert('Link copied to clipboard! Share it with your friends to unlock more uses. +3 Uses Added!');
                     unlockUses();
                 }
             });
@@ -278,9 +378,21 @@
                 setTimeout(() => e.target.textContent = 'Copy Text', 2000);
             });
             
+            // Countdown Timer
+            let countdown = 899;
+            const countdownEl = document.getElementById('countdown');
+            if (countdownEl) {
+                setInterval(() => {
+                    if (countdown <= 0) countdown = 899;
+                    const mins = Math.floor(countdown / 60);
+                    const secs = countdown % 60;
+                    countdownEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+                    countdown--;
+                }, 1000);
+            }
+            
             updateCredits();
         });
     </script>
 </body>
 </html>
-
