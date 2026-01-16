@@ -1,9 +1,9 @@
 // /api/generate.js
-// 使用 ES Module 语法（Vercel 原生支持）
+// 使用最传统的 CommonJS 格式（Vercel 默认且最稳定的方式）
 
-export default async function handler(req, res) {
-  // CORS 支持（如果前端和后端域名不同）
-  res.setHeader('Access-Control-Allow-Credentials', true);
+module.exports = async function handler(req, res) {
+  // CORS 支持
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -16,24 +16,22 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  // 🔑 读取环境变量（增强版错误检查）
+  // 🔑 读取环境变量
   const apiKey = process.env.ANY_ROUTER_KEY;
   
-  // 调试信息（仅在开发环境输出，生产环境会被隐藏）
-  if (process.env.VERCEL_ENV !== 'production') {
-    console.log('[DEBUG] Environment:', process.env.VERCEL_ENV);
-    console.log('[DEBUG] API Key exists:', !!apiKey);
-    console.log('[DEBUG] All env keys:', Object.keys(process.env).filter(k => k.includes('ANY')));
-  }
+  // 详细的调试日志
+  console.log('[DEBUG] Environment:', process.env.VERCEL_ENV);
+  console.log('[DEBUG] API Key exists:', !!apiKey);
+  console.log('[DEBUG] API Key first 10 chars:', apiKey ? apiKey.substring(0, 10) : 'NONE');
 
   if (!apiKey) {
-    // 返回更详细的错误信息
+    console.error('[ERROR] ANY_ROUTER_KEY not found in environment');
     return res.status(500).json({ 
       error: 'Server configuration error: ANY_ROUTER_KEY not found',
       debug: {
         environment: process.env.VERCEL_ENV || 'unknown',
         timestamp: new Date().toISOString(),
-        availableKeys: Object.keys(process.env).filter(k => !k.includes('SECRET')).slice(0, 5)
+        nodeVersion: process.version
       }
     });
   }
@@ -78,6 +76,8 @@ Generate the JSON for the user's request.
 `;
 
   try {
+    console.log('[INFO] Calling AI API...');
+    
     const response = await fetch('https://api.anyrouter.top/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -93,9 +93,11 @@ Generate the JSON for the user's request.
       })
     });
 
+    console.log('[INFO] AI API response status:', response.status);
+
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('[AI Error]', response.status, errorText);
+      console.error('[AI ERROR]', response.status, errorText);
       return res.status(response.status).json({ 
         error: 'AI provider error', 
         details: errorText 
@@ -106,6 +108,8 @@ Generate the JSON for the user's request.
     const ai_response = JSON.parse(data.choices[0].message.content);
     const believability = Math.floor(Math.random() * (98 - 88 + 1) + 88);
 
+    console.log('[SUCCESS] Generated excuse');
+
     return res.status(200).json({ 
       text: ai_response.excuse,
       imageSearchTerm: ai_response.image_search_term,
@@ -113,10 +117,10 @@ Generate the JSON for the user's request.
     });
 
   } catch (error) {
-    console.error('[Server Error]', error);
+    console.error('[SERVER ERROR]', error.message, error.stack);
     return res.status(500).json({ 
       error: 'Internal server error',
       message: error.message 
     });
   }
-}
+};
