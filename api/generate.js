@@ -1,14 +1,14 @@
-// /api/generate.js
-
-export default async function handler(req, res) {
+// 使用 module.exports 替代 export default，以匹配 Vercel 的默认 Node.js 环境
+module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  // 安全第一: 从 Vercel 环境变量中读取 Key
+  // 从服务器环境变量中读取 API Key
   const apiKey = process.env.ANY_ROUTER_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'Server configuration error: API Key not found.' });
+    // 明确告知 API Key 在服务器端未找到
+    return res.status(500).json({ error: 'Server configuration error: API Key missing' });
   }
 
   const { scenario } = req.body;
@@ -16,12 +16,11 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Scenario is required.' });
   }
 
-  // GEO 逻辑: 从 Vercel 的请求头中解码用户地理位置
+  // GEO 逻辑 (保持不变)
   const city = req.headers['x-vercel-ip-city'] ? decodeURIComponent(req.headers['x-vercel-ip-city']) : '';
   const region = req.headers['x-vercel-ip-country-region'] ? decodeURIComponent(req.headers['x-vercel-ip-country-region']) : '';
   const location = city && region ? ` in ${city}, ${region}` : '';
 
-  // 增强版 Prompt: 强调本地化和 JSON 输出
   const prompt = `
 You are an AI assistant that generates believable, hyper-local text message excuses.
 The user's scenario is: "${scenario}"${location}.
@@ -56,7 +55,7 @@ Generate the JSON for the user's request.
       },
       body: JSON.stringify({
         model: "gpt-4o",
-        response_format: { type: "json_object" }, // 强制 JSON 输出
+        response_format: { type: "json_object" },
         messages: [{ role: "user", content: prompt }],
         temperature: 0.85,
         max_tokens: 120
@@ -65,17 +64,13 @@ Generate the JSON for the user's request.
 
     if (!response.ok) {
       const errorData = await response.json();
-      // 将 AI 供应商的错误信息透传给前端，便于调试
       return res.status(response.status).json({ error: 'AI provider error', details: errorData });
     }
 
     const data = await response.json();
     const ai_response = JSON.parse(data.choices[0].message.content);
-    
-    // 游戏化: 动态生成可信度分数
     const believability = Math.floor(Math.random() * (98 - 88 + 1) + 88);
 
-    // 将前端需要的所有数据整合后一次性返回
     res.status(200).json({ 
       text: ai_response.excuse,
       imageSearchTerm: ai_response.image_search_term,
@@ -86,4 +81,4 @@ Generate the JSON for the user's request.
     console.error('Error in /api/generate:', error);
     res.status(500).json({ error: 'Internal server error.' });
   }
-}
+};
